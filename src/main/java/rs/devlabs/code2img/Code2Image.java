@@ -44,6 +44,17 @@ public final class Code2Image {
         return graphicsHelper.draw(lines);
     }
 
+    public BufferedImage convert(List<String> codeBlock) throws IOException, NoSuchFileException {
+        List<String> lines = codeBlock;
+        if (lines.isEmpty()) {
+            throw new IllegalArgumentException("File is empty!");
+        }
+
+        LexerUtils.setLexerToJava();
+
+        return graphicsHelper.draw(lines);
+    }
+
     public void convertAndSave(File fileToConvert, File outputFile) throws IOException, IllegalArgumentException, RuntimeException {
         BufferedImage image = convert(fileToConvert);
         if (!ImageUtils.save(image, settings.getFormat(), outputFile)) {
@@ -53,5 +64,12 @@ public final class Code2Image {
 
     public void convertAndSave(String fileToConvert, String fileOutput) throws IOException, IllegalArgumentException {
         convertAndSave(new File(fileToConvert), new File(fileOutput));
+    }
+
+    public void convertAndSave(List<String> codeBlock,File outputFile) throws IOException, IllegalArgumentException {
+        BufferedImage image = convert(codeBlock);
+        if (!ImageUtils.save(image, settings.getFormat(), outputFile)) {
+            throw new RuntimeException("Unexpected error writing image");
+        }
     }
 }
