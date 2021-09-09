@@ -73,6 +73,7 @@ public class App {
                             "    dom.setAttribute(\"style\",\"display:none\");\n" +
                             "</script>";
                     bw.write(scriptStr);
+                    bw.newLine();
                     bw.flush();
                     continue;
                 }
